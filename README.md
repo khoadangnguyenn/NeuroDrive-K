@@ -1,3 +1,66 @@
+
+<div align="center">
+
+# 🚗 NeuroDrive-K
+**A Modular, Hybrid Framework for Autonomous Driving Systems**
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![AI Framework](https://img.shields.io/badge/AI-Deep_Learning_%7C_Bayesian_Networks-ee4c2c.svg?style=flat-square)](#)
+[![Status](https://img.shields.io/badge/Status-Active-success.svg?style=flat-square)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+*Bridging perception, prediction, planning, and control into a unified pipeline.*
+
+</div>
+
+<br>
+
+## 📌 Overview
+
+**NeuroDrive-K** is an end-to-end autonomous driving framework designed to operate in complex urban environments. By combining **Deep Learning** with **Hybrid AI**, it ensures both high-performance adaptability and safety-critical reliability. 
+
+The framework aims to simulate and eventually support real-world autonomous driving by integrating:
+- 📡 **Multi-sensor data fusion** (Camera, LiDAR, Radar, GPS)
+- 👁️ **Advanced perception** utilizing Bird’s Eye View (BEV)
+- 🎲 **Probabilistic prediction** and robust risk assessment
+- 🧠 **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
+- ⚙️ **Robust low-level vehicle control**
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    subgraph Sensing Layer
+        C[Camera] --> S[Sensor Fusion]
+        L[LiDAR] --> S
+        R[Radar & GPS] --> S
+    end
+
+    subgraph Perception & BEV
+        S --> BEV[BEV World Model]
+        BEV --> OD[Object & Lane Detection]
+        BEV --> OG[Occupancy Grid]
+    end
+
+    subgraph Prediction & Risk
+        OD --> PP[Probabilistic Prediction]
+        OG --> BRM[Bayesian Risk Modeling]
+    end
+
+    subgraph Hybrid Planning
+        PP --> GP[Global Planning - A* / Dijkstra]
+        BRM --> BP[Behavior Planning]
+        GP --> LP[Local Planning & Cost Map Fusion]
+        BP --> LP
+    end
+
+    subgraph Control Layer
+        LP --> Ctr[PID / MPC Controllers]
+        Ctr --> Veh[Vehicle Actuation]
+    end
+
 # NeuroDrive-K
 
 🚗 NeuroDrive-K: Hybrid Framework for Autonomous Driving systems
