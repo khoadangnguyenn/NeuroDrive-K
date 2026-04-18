@@ -20,11 +20,11 @@
 **NeuroDrive-K** is an end-to-end autonomous driving framework designed to operate in complex urban environments. By combining **Deep Learning** with **Hybrid AI**, it ensures both high-performance adaptability and safety-critical reliability. 
 
 The framework aims to simulate and eventually support real-world autonomous driving by integrating:
-- 📡 **Multi-sensor data fusion** (Camera, LiDAR, Radar, GPS)
-- 👁️ **Advanced perception** utilizing Bird’s Eye View (BEV)
-- 🎲 **Probabilistic prediction** and robust risk assessment
-- 🧠 **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
-- ⚙️ **Robust low-level vehicle control**
+- **Multi-sensor data fusion** (Camera, LiDAR, Radar, GPS)
+- **Advanced perception** utilizing Bird’s Eye View (BEV)
+- **Probabilistic prediction** and robust risk assessment
+- **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
+- **Robust low-level vehicle control**
 
 ---
 
@@ -85,26 +85,19 @@ NeuroDrive/
 
 # 🚀 Getting Started
 
-## 1. Clone Repository
+## Clone Repository
 ```
 git clone https://github.com/your-username/neurodrive.git
 cd neurodrive
 ```
-## 2. Setup Environment
+## Setup Environment
 ```
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
-## 3. Run Simulation / Training
+## Run Simulation / Training
 ```
 python main.py --mode train
 ```
 
-
-# 🔮 Future Work
-
-* End-to-end learning integration
-* Multi-agent interaction modeling
-* Real-time deployment optimization
-* Integration with CARLA / real-world datasets
