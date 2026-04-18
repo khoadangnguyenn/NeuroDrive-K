@@ -26,22 +26,6 @@ The framework aims to simulate and eventually support real-world autonomous driv
 - 🧠 **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
 - ⚙️ **Robust low-level vehicle control**
 
-
-# 🚗 NeuroDrive-K: Hybrid Framework for Autonomous Driving systems
-
-NeuroDrive is a modular, end-to-end autonomous driving framework designed to operate in complex urban environments. It bridges perception, prediction, planning, and control into a unified pipeline, combining Deep Learning with Hybrid AI to ensure both high performance and safety-critical reliability.
-
-# 📌 Overview
-
-NeuroDrive aims to simulate and eventually support real-world autonomous driving by integrating:
-
-* Multi-sensor data fusion (Camera, LiDAR, Radar, GPS)
-* Advanced perception using Bird’s Eye View (BEV)
-* Probabilistic prediction and risk assessment
-* Hybrid planning (rule-based + learning-based)
-* Robust low-level vehicle control
-
-
 # 🏗️ System Architecture
 
 The system is divided into five core layers:
