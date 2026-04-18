@@ -28,7 +28,7 @@ Collects raw environmental data:
 * Radar & GPS: Localization and motion sensing
 
 
-2. Perception & BEV World Model
+#2. Perception & BEV World Model
 
 Transforms raw sensor data into structured understanding:
 
@@ -37,7 +37,7 @@ Transforms raw sensor data into structured understanding:
 * Occupancy Grid: Free vs. occupied space modeling
 
 
-3. Prediction & Risk Assessment
+#3. Prediction & Risk Assessment
 
 Estimates future states of dynamic agents:
 
@@ -46,7 +46,7 @@ Estimates future states of dynamic agents:
 * Bayesian Risk Modeling: Adaptive safety under uncertainty (e.g., weather)
 
 
-4. Hybrid Planning
+#4. Hybrid Planning
 
 Decision-making system with three levels:
 
@@ -57,7 +57,7 @@ Decision-making system with three levels:
     * Optimal trajectory generation via A*
 
 
-5. Control Layer
+#5. Control Layer
 
 Executes motion commands:
 
@@ -84,27 +84,26 @@ NeuroDrive/
 │── requirements.txt
 │── README.md
 ```
-⸻
 
-🚀 Getting Started
+#🚀 Getting Started
 
-1. Clone Repository
+#1. Clone Repository
 ```
 git clone https://github.com/your-username/neurodrive.git
 cd neurodrive
 ```
-2. Setup Environment
+#2. Setup Environment
 ```
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
-3. Run Simulation / Training
+#3. Run Simulation / Training
 ```
 python main.py --mode train
 ```
 
-📊 Evaluation
+#📊 Evaluation
 
 NeuroDrive supports evaluation using:
 
@@ -113,7 +112,7 @@ NeuroDrive supports evaluation using:
 * Scenario Testing: Seen vs Unseen environments
 
 
-🔮 Future Work
+#🔮 Future Work
 
 * End-to-end learning integration
 * Multi-agent interaction modeling
