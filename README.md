@@ -26,48 +26,12 @@ The framework aims to simulate and eventually support real-world autonomous driv
 - 🧠 **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
 - ⚙️ **Robust low-level vehicle control**
 
----
 
-## 🏗️ System Architecture
-
-```mermaid
-graph TD
-    subgraph Sensing Layer
-        C[Camera] --> S[Sensor Fusion]
-        L[LiDAR] --> S
-        R[Radar & GPS] --> S
-    end
-
-    subgraph Perception & BEV
-        S --> BEV[BEV World Model]
-        BEV --> OD[Object & Lane Detection]
-        BEV --> OG[Occupancy Grid]
-    end
-
-    subgraph Prediction & Risk
-        OD --> PP[Probabilistic Prediction]
-        OG --> BRM[Bayesian Risk Modeling]
-    end
-
-    subgraph Hybrid Planning
-        PP --> GP[Global Planning - A* / Dijkstra]
-        BRM --> BP[Behavior Planning]
-        GP --> LP[Local Planning & Cost Map Fusion]
-        BP --> LP
-    end
-
-    subgraph Control Layer
-        LP --> Ctr[PID / MPC Controllers]
-        Ctr --> Veh[Vehicle Actuation]
-    end
-
-# NeuroDrive-K
-
-🚗 NeuroDrive-K: Hybrid Framework for Autonomous Driving systems
+# 🚗 NeuroDrive-K: Hybrid Framework for Autonomous Driving systems
 
 NeuroDrive is a modular, end-to-end autonomous driving framework designed to operate in complex urban environments. It bridges perception, prediction, planning, and control into a unified pipeline, combining Deep Learning with Hybrid AI to ensure both high performance and safety-critical reliability.
 
-📌 Overview
+# 📌 Overview
 
 NeuroDrive aims to simulate and eventually support real-world autonomous driving by integrating:
 
@@ -78,7 +42,7 @@ NeuroDrive aims to simulate and eventually support real-world autonomous driving
 * Robust low-level vehicle control
 
 
-🏗️ System Architecture
+# 🏗️ System Architecture
 
 The system is divided into five core layers:
 
@@ -91,7 +55,7 @@ Collects raw environmental data:
 * Radar & GPS: Localization and motion sensing
 
 
-#2. Perception & BEV World Model
+2. Perception & BEV World Model
 
 Transforms raw sensor data into structured understanding:
 
@@ -100,7 +64,7 @@ Transforms raw sensor data into structured understanding:
 * Occupancy Grid: Free vs. occupied space modeling
 
 
-#3. Prediction & Risk Assessment
+3. Prediction & Risk Assessment
 
 Estimates future states of dynamic agents:
 
@@ -109,7 +73,7 @@ Estimates future states of dynamic agents:
 * Bayesian Risk Modeling: Adaptive safety under uncertainty (e.g., weather)
 
 
-#4. Hybrid Planning
+4. Hybrid Planning
 
 Decision-making system with three levels:
 
@@ -120,7 +84,7 @@ Decision-making system with three levels:
     * Optimal trajectory generation via A*
 
 
-#5. Control Layer
+5. Control Layer
 
 Executes motion commands:
 
@@ -148,25 +112,25 @@ NeuroDrive/
 │── README.md
 ```
 
-#🚀 Getting Started
+# 🚀 Getting Started
 
-#1. Clone Repository
+1. Clone Repository
 ```
 git clone https://github.com/your-username/neurodrive.git
 cd neurodrive
 ```
-#2. Setup Environment
+2. Setup Environment
 ```
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
-#3. Run Simulation / Training
+3. Run Simulation / Training
 ```
 python main.py --mode train
 ```
 
-#📊 Evaluation
+# 📊 Evaluation
 
 NeuroDrive supports evaluation using:
 
@@ -175,7 +139,7 @@ NeuroDrive supports evaluation using:
 * Scenario Testing: Seen vs Unseen environments
 
 
-#🔮 Future Work
+# 🔮 Future Work
 
 * End-to-end learning integration
 * Multi-agent interaction modeling
