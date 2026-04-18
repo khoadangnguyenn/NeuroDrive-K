@@ -31,14 +31,14 @@ The framework aims to simulate and eventually support real-world autonomous driv
 
 NeuroDrive-K operates on a modular, 5-layer pipeline:
 
-1. **📡 Sensing:** Multi-sensor data acquisition (Camera, LiDAR, Radar, GPS/IMU).
-2. **👁️ Perception:** 3D object detection, segmentation, and unified Bird’s Eye View (BEV) mapping.
-3. **🎲 Prediction:** Probabilistic trajectory forecasting and Bayesian risk assessment.
-4. **🧠 Planning:** Multi-tiered decision making (Global Routing ➔ Tactical Behavior ➔ Local Trajectory).
-5. **⚙️ Control:** Precise vehicle actuation using PID and MPC controllers.
+1. **Sensing:** Multi-sensor data acquisition (Camera, LiDAR, Radar, GPS/IMU).
+2. **Perception:** 3D object detection, segmentation, and unified Bird’s Eye View (BEV) mapping.
+3. **Prediction:** Probabilistic trajectory forecasting and Bayesian risk assessment.
+4. **Planning:** Multi-tiered decision making (Global Routing ➔ Tactical Behavior ➔ Local Trajectory).
+5. **Control:** Precise vehicle actuation using PID and MPC controllers.
 
 ---
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```
 
@@ -59,7 +59,7 @@ NeuroDrive/
 │── README.md
 ```
 
-# 🚀 Getting Started
+## 🚀 Getting Started
 
 ```
 # 1. Clone Repository
