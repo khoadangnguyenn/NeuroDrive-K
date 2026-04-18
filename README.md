@@ -26,56 +26,43 @@ The framework aims to simulate and eventually support real-world autonomous driv
 - 🧠 **Hybrid planning** (Rule-based constraints + Learning-based algorithms)
 - ⚙️ **Robust low-level vehicle control**
 
-# 🏗️ System Architecture
+---
 
-The system is divided into five core layers:
+## 🏗️ System Architecture
 
-1. Sensing Layer
+**NeuroDrive-K** is built upon a modular, scalable pipeline. The system is compartmentalized into five core layers that collectively transform raw environmental data into actionable driving maneuvers:
 
-Collects raw environmental data:
+### 1. 📡 Sensing Layer (Data Acquisition)
+The foundation of the pipeline, responsible for real-time environmental data ingestion:
+* **Camera (RGB/Stereo):** Extracts high-resolution visual context and semantic features.
+* **LiDAR:** Captures precise 3D geometric point clouds for depth estimation and physical profiling.
+* **Radar & GPS/IMU:** Provides robust localization, velocity tracking, and all-weather motion sensing.
 
-* Camera (RGB/Stereo): Semantic understanding
-* LiDAR: Precise 3D geometry
-* Radar & GPS: Localization and motion sensing
+### 2. 👁️ Perception & BEV World Model
+Transforms heterogeneous sensor streams into a unified, structured understanding of the world:
+* **Core Tasks:** 2D/3D object detection, semantic segmentation, and lane topology mapping.
+* **Bird’s Eye View (BEV):** Fuses multi-modal data into a cohesive, top-down spatial representation.
+* **Occupancy Grid Mapping:** Accurately delineates drivable free space from static and dynamic obstacles.
 
+### 3. 🎲 Prediction & Risk Assessment
+Anticipates the future states of dynamic agents to ensure proactive safety:
+* **Trajectory Forecasting:** Utilizes probabilistic models to predict the intentions and future paths of surrounding traffic.
+* **Risk Classification:** Real-time binary and multi-class collision likelihood estimation.
+* **Bayesian Risk Modeling:** Dynamically adjusts safety margins under uncertainty (e.g., adverse weather, sensor noise, occlusion).
 
-2. Perception & BEV World Model
+### 4. 🧠 Hybrid Planning
+A robust, multi-tiered decision-making engine:
+* **Global Planning:** High-level route formulation using graph search algorithms (A*, Dijkstra).
+* **Behavioral Planning:** Tactical, context-aware decision-making (e.g., yielding, stopping, overtaking, lane changing).
+* **Local Planning:** Generates spatio-temporally optimal, collision-free trajectories based on a fused Cost Map (evaluating risk, traffic rules, and obstacle clearance).
 
-Transforms raw sensor data into structured understanding:
+### 5. ⚙️ Control Layer
+Translates planned trajectories into precise, low-level vehicle actuation:
+* **Execution:** Commands for steering angle, acceleration (throttle), and braking.
+* **Controllers:** Implements industry-standard algorithms (PID, Model Predictive Control - MPC).
+* **Objective:** Ensures smooth, stable, and passenger-comfortable vehicle dynamics under diverse driving conditions.
 
-* Object detection, segmentation, lane detection
-* BEV (Bird’s Eye View): Unified top-down spatial representation
-* Occupancy Grid: Free vs. occupied space modeling
-
-
-3. Prediction & Risk Assessment
-
-Estimates future states of dynamic agents:
-
-* Behavior prediction using probabilistic models
-* Binary risk classification (e.g., collision likelihood)
-* Bayesian Risk Modeling: Adaptive safety under uncertainty (e.g., weather)
-
-
-4. Hybrid Planning
-
-Decision-making system with three levels:
-
-* Global Planning: Route planning (A*, Dijkstra)
-* Behavior Planning: High-level decisions (stop, yield, overtake)
-* Local Planning:
-    * Cost Map Fusion (Risk + Rules + Distance)
-    * Optimal trajectory generation via A*
-
-
-5. Control Layer
-
-Executes motion commands:
-
-* Steering, acceleration, braking
-* Controllers: PID / MPC
-* Ensures smooth and stable vehicle behavior
-
+---
 ```
 📂 Project Structure (Suggested)
 
@@ -98,29 +85,21 @@ NeuroDrive/
 
 # 🚀 Getting Started
 
-1. Clone Repository
+## 1. Clone Repository
 ```
 git clone https://github.com/your-username/neurodrive.git
 cd neurodrive
 ```
-2. Setup Environment
+## 2. Setup Environment
 ```
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
-3. Run Simulation / Training
+## 3. Run Simulation / Training
 ```
 python main.py --mode train
 ```
-
-# 📊 Evaluation
-
-NeuroDrive supports evaluation using:
-
-* Trajectory Metrics: AOE, ADE, MADE
-* Safety Metrics: Collision Rate, Minimum Distance
-* Scenario Testing: Seen vs Unseen environments
 
 
 # 🔮 Future Work
