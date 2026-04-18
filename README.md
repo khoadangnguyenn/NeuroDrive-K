@@ -27,40 +27,15 @@ The framework aims to simulate and eventually support real-world autonomous driv
 - **Robust low-level vehicle control**
 
 ---
-
 ## 🏗️ System Architecture
 
-**NeuroDrive-K** is built upon a modular, scalable pipeline. The system is compartmentalized into five core layers that collectively transform raw environmental data into actionable driving maneuvers:
+NeuroDrive-K operates on a modular, 5-layer pipeline:
 
-### 1. 📡 Sensing Layer (Data Acquisition)
-The foundation of the pipeline, responsible for real-time environmental data ingestion:
-* **Camera (RGB/Stereo):** Extracts high-resolution visual context and semantic features.
-* **LiDAR:** Captures precise 3D geometric point clouds for depth estimation and physical profiling.
-* **Radar & GPS/IMU:** Provides robust localization, velocity tracking, and all-weather motion sensing.
-
-### 2. 👁️ Perception & BEV World Model
-Transforms heterogeneous sensor streams into a unified, structured understanding of the world:
-* **Core Tasks:** 2D/3D object detection, semantic segmentation, and lane topology mapping.
-* **Bird’s Eye View (BEV):** Fuses multi-modal data into a cohesive, top-down spatial representation.
-* **Occupancy Grid Mapping:** Accurately delineates drivable free space from static and dynamic obstacles.
-
-### 3. 🎲 Prediction & Risk Assessment
-Anticipates the future states of dynamic agents to ensure proactive safety:
-* **Trajectory Forecasting:** Utilizes probabilistic models to predict the intentions and future paths of surrounding traffic.
-* **Risk Classification:** Real-time binary and multi-class collision likelihood estimation.
-* **Bayesian Risk Modeling:** Dynamically adjusts safety margins under uncertainty (e.g., adverse weather, sensor noise, occlusion).
-
-### 4. 🧠 Hybrid Planning
-A robust, multi-tiered decision-making engine:
-* **Global Planning:** High-level route formulation using graph search algorithms (A*, Dijkstra).
-* **Behavioral Planning:** Tactical, context-aware decision-making (e.g., yielding, stopping, overtaking, lane changing).
-* **Local Planning:** Generates spatio-temporally optimal, collision-free trajectories based on a fused Cost Map (evaluating risk, traffic rules, and obstacle clearance).
-
-### 5. ⚙️ Control Layer
-Translates planned trajectories into precise, low-level vehicle actuation:
-* **Execution:** Commands for steering angle, acceleration (throttle), and braking.
-* **Controllers:** Implements industry-standard algorithms (PID, Model Predictive Control - MPC).
-* **Objective:** Ensures smooth, stable, and passenger-comfortable vehicle dynamics under diverse driving conditions.
+1. **📡 Sensing:** Multi-sensor data acquisition (Camera, LiDAR, Radar, GPS/IMU).
+2. **👁️ Perception:** 3D object detection, segmentation, and unified Bird’s Eye View (BEV) mapping.
+3. **🎲 Prediction:** Probabilistic trajectory forecasting and Bayesian risk assessment.
+4. **🧠 Planning:** Multi-tiered decision making (Global Routing ➔ Tactical Behavior ➔ Local Trajectory).
+5. **⚙️ Control:** Precise vehicle actuation using PID and MPC controllers.
 
 ---
 # 📂 Project Structure
@@ -86,19 +61,21 @@ NeuroDrive/
 
 # 🚀 Getting Started
 
-## Clone Repository
 ```
+# 1. Clone Repository
 git clone https://github.com/your-username/neurodrive.git
 cd neurodrive
 ```
-## Setup Environment
+
 ```
+# 2. Setup Environment
 python -m venv venv
 source venv/bin/activate   # macOS/Linux
 pip install -r requirements.txt
 ```
-## Run Simulation / Training
+
 ```
+# 3. Run
 python main.py --mode train
 ```
 
