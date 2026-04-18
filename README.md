@@ -63,8 +63,9 @@ Translates planned trajectories into precise, low-level vehicle actuation:
 * **Objective:** Ensures smooth, stable, and passenger-comfortable vehicle dynamics under diverse driving conditions.
 
 ---
+# 📂 Project Structure
+
 ```
-📂 Project Structure (Suggested)
 
 NeuroDrive/
 │── sensing/              # Sensor data processing
