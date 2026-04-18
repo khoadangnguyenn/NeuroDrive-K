@@ -4,8 +4,6 @@
 
 NeuroDrive is a modular, end-to-end autonomous driving framework designed to operate in complex urban environments. It bridges perception, prediction, planning, and control into a unified pipeline, combining Deep Learning with Hybrid AI to ensure both high performance and safety-critical reliability.
 
-⸻
-
 📌 Overview
 
 NeuroDrive aims to simulate and eventually support real-world autonomous driving by integrating:
@@ -16,7 +14,6 @@ NeuroDrive aims to simulate and eventually support real-world autonomous driving
 * Hybrid planning (rule-based + learning-based)
 * Robust low-level vehicle control
 
-⸻
 
 🏗️ System Architecture
 
@@ -30,7 +27,6 @@ Collects raw environmental data:
 * LiDAR: Precise 3D geometry
 * Radar & GPS: Localization and motion sensing
 
-⸻
 
 2. Perception & BEV World Model
 
@@ -40,7 +36,6 @@ Transforms raw sensor data into structured understanding:
 * BEV (Bird’s Eye View): Unified top-down spatial representation
 * Occupancy Grid: Free vs. occupied space modeling
 
-⸻
 
 3. Prediction & Risk Assessment
 
@@ -50,7 +45,6 @@ Estimates future states of dynamic agents:
 * Binary risk classification (e.g., collision likelihood)
 * Bayesian Risk Modeling: Adaptive safety under uncertainty (e.g., weather)
 
-⸻
 
 4. Hybrid Planning
 
@@ -62,7 +56,6 @@ Decision-making system with three levels:
     * Cost Map Fusion (Risk + Rules + Distance)
     * Optimal trajectory generation via A*
 
-⸻
 
 5. Control Layer
 
@@ -72,40 +65,6 @@ Executes motion commands:
 * Controllers: PID / MPC
 * Ensures smooth and stable vehicle behavior
 
-⸻
-
-🌟 Key Features
-
-* Hybrid AI Architecture
-    Combines neural networks with rule-based logic for safety
-* BEV-Based Perception
-    Enables strong spatial reasoning and scene understanding
-* Adaptive Safety System
-    Bayesian logic adjusts behavior under uncertainty (rain, crowd density, etc.)
-
-⸻
-
-🛠️ Technology Stack
-
-Algorithms
-
-* A* Search
-* Bayesian Inference
-* Cost Map Fusion
-
-AI Models
-
-* CNN Encoder-Decoder
-* Logistic Regression
-* Decision Trees
-
-Sensors & Data
-
-* Camera–LiDAR Fusion
-* Radar
-* HD Maps
-
-⸻
 ```
 📂 Project Structure (Suggested)
 
@@ -144,7 +103,6 @@ pip install -r requirements.txt
 ```
 python main.py --mode train
 ```
-⸻
 
 📊 Evaluation
 
@@ -154,7 +112,6 @@ NeuroDrive supports evaluation using:
 * Safety Metrics: Collision Rate, Minimum Distance
 * Scenario Testing: Seen vs Unseen environments
 
-⸻
 
 🔮 Future Work
 
