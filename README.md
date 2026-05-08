@@ -2,6 +2,8 @@
 
 # 🚗 NeuroDrive-K
 **A Modular, Hybrid Framework for Autonomous Driving Systems**
+</div>
+
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![AI Project](https://img.shields.io/badge/Field-Artificial_Intelligence-red.svg?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/Status-Complete-success.svg?style=flat-square)](#)
