@@ -56,7 +56,7 @@ This system implements the mandatory 4-layer architecture for autonomous decisio
 ## 📂 Project Structure
 
 ```
-Autonomous_Driving_NMAI/
+NeuroDrive-K/
 ├── data/                       # Raw and source datasets
 ├── features/                   # Preprocessed & engineered features
 ├── models/                     # Saved ML models (PKL files)
