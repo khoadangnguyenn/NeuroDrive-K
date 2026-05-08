@@ -16,7 +16,6 @@ def perform_feature_engineering(df):
     print("Performing Feature Engineering (Optimized)...")
     df_feat = df.drop_duplicates().copy()
 
-    # 1. Basic Cleaning & Type Conversion
     cat_cols = ['weather_condition', 'road_surface_condition', 'behavior_label']
     num_cols = [
         'obstacle_distance_m','relative_speed_mps','num_obstacles','lane_offset_m',
@@ -40,7 +39,7 @@ def perform_feature_engineering(df):
             mode_val = df_feat[c].mode(dropna=True)
             df_feat[c] = df_feat[c].fillna(mode_val.iloc[0] if len(mode_val) else 'unknown')
 
-    # 2. Physical Clipping (Standardization Bounds)
+    # Standardization Bounds
     bounds = {
         'obstacle_distance_m': (0, 300),
         'num_obstacles': (0, 20),
@@ -59,59 +58,43 @@ def perform_feature_engineering(df):
     if 'num_obstacles' in df_feat.columns:
         df_feat['num_obstacles'] = df_feat['num_obstacles'].round().astype(int)
 
-    # 3. Categorical Encoding
     le_weather = LabelEncoder()
     df_feat['weather_encoded'] = le_weather.fit_transform(df_feat['weather_condition'])
     
     le_road = LabelEncoder()
     df_feat['road_encoded'] = le_road.fit_transform(df_feat['road_surface_condition'])
     
-    # 4. Feature Engineering
     df_feat['closing_rate_mps'] = np.maximum(df_feat['relative_speed_mps'], 0)
     df_feat['ttc'] = df_feat['obstacle_distance_m'] / (df_feat['closing_rate_mps'] + 1e-3)
     df_feat['ttc'] = df_feat['ttc'].clip(0, 120)
     df_feat['abs_ttc'] = df_feat['ttc']
-    
-    # Ego speed in km/h and over limit
+
     df_feat['ego_speed_kmh'] = df_feat['ego_speed_mps'] * 3.6
     df_feat['speed_over_limit_kmh'] = df_feat['ego_speed_kmh'] - df_feat['speed_limit_kmh']
     
-    # Absolute road curvature
     df_feat['curvature_abs'] = df_feat['road_curvature_1pm'].abs()
 
-    # Braking interaction
     df_feat['brake_throttle_diff'] = df_feat['brake_pressure'] - df_feat['throttle_position']
 
-    # Kinetic Danger (Energy-based risk)
     df_feat['kinetic_danger'] = df_feat['ego_speed_mps'] * df_feat['traffic_density_veh_per_km']
     
-    # Safety Distance Ratio
     df_feat['safety_ratio'] = df_feat['obstacle_distance_m'] / np.maximum(df_feat['ego_speed_mps'], 1.0)
     
-    # Visibility Factor (Scaled 0-1)
     df_feat['visibility_factor'] = df_feat['visibility_range_m'] / 500.0
     
-    # Centrifugal Risk (Curvature × Velocity²)
     df_feat['centrifugal_risk'] = df_feat['curvature_abs'] * (df_feat['ego_speed_mps']**2)
     
-    # Braking Urgency
     delta_v = np.maximum(0, df_feat['ego_speed_mps'] - df_feat['relative_speed_mps'])
     df_feat['braking_urgency'] = (delta_v**2) / (2 * np.maximum(0.1, df_feat['obstacle_distance_m']))
     
-    # Interaction: Required Deceleration
     rel_speed_sq = df_feat['relative_speed_mps'] ** 2
     df_feat['deceleration_needed'] = rel_speed_sq / (2 * np.maximum(0.1, df_feat['obstacle_distance_m']))
     
-    # Lane Danger (Offset × Speed)
     df_feat['lane_danger'] = np.abs(df_feat['lane_offset_m']) * df_feat['ego_speed_mps']
     
-    # Weather-Visibility Interaction
     df_feat['weather_visibility'] = df_feat['weather_encoded'] * (1 - df_feat['visibility_range_m'] / 500.0)
-    
-    # Congestion Index
     df_feat['congestion_index'] = df_feat['traffic_density_veh_per_km'] * df_feat['num_obstacles']
     
-    # 5. Computed Risk (Physics-based target combination)
     risk_proximity = 1.0 - np.clip(df_feat['obstacle_distance_m'] / 100.0, 0, 1)
     risk_speed = np.clip(df_feat['ego_speed_mps'] / 30.0, 0, 1)
     risk_density = np.clip(df_feat['traffic_density_veh_per_km'] / 50.0, 0, 1)
