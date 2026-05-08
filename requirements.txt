@@ -1,0 +1,14 @@
+numpy>=1.26.0
+pandas>=2.1.0
+opencv-python
+matplotlib
+scikit-learn>=1.4.0
+torch>=2.2.0
+torchvision
+tqdm
+lightgbm>=4.3.0
+xgboost>=1.7.0
+catboost>=1.2.0
+pillow
+shap
+joblib
