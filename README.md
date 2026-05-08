@@ -10,6 +10,7 @@
 
 A comprehensive autonomous driving simulation framework that integrates Machine Learning perception, Bayesian risk modeling, rule-based decision making, and A* path planning. This project satisfies the requirements for the **Introduction to AI (NMAI)** course.
 </div>
+
 ---
 
 ## 📽️ Simulation Previews
