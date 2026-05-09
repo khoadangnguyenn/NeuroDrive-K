@@ -16,7 +16,7 @@ A comprehensive autonomous driving simulation framework that integrates Machine 
 ## 🎓 Course Information
 - **Course Name**: Introduction to Artificial Intelligence
 - **Course Code**:  CO3061
-- **Semester**: Semester 2 - Year 2025-2026
+- **Semester**: Semester 2, Academic Year 2025–2026
 - **Instructor**: Dr. Truong Vinh Lan
 
 ## 👥 Team Members
