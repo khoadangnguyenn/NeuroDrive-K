@@ -160,5 +160,5 @@ The system generates a detailed **SHAP Importance Plot** in the `visualize/` fol
 
 ---
 <div align="center">
-Developed for the <b>Nhập môn AI (NMAI)</b> Course.
+Developed for the <b>Introduction to Artificial Intelligence</b> Course.
 </div>
