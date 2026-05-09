@@ -2,29 +2,24 @@ import numpy as np
 from .bayes import apply_bayesian_update
 from .rule_based import obstacle_penalty_profile, behavior_policy, check_rule_violation, INF
 
-def create_grid_map(row, risk_score_ml, grid_width=120, grid_height=80):
+def create_grid_map(row, p_risk, behavior_label, grid_width=120, grid_height=80):
     """
     Builds a Grid Cost Map based on:
     - Road Curvature and Width
-    - Obstacle positions and Bayesian dynamic risk
+    - Obstacle positions and Bayesian dynamic risk (passed via p_risk)
     - Safety Rules (Hard constraints)
     """
     grid_h, grid_w = grid_height, grid_width
     
-    # 1. Bayesian Risk Update
-    p_base, p_risk = apply_bayesian_update(
-        risk_score_ml, 
-        row['weather_condition'], 
-        row['road_surface_condition'], 
-        row['visibility_range_m']
-    )
+    # 1. Bayesian Risk Update (NOW PASSED AS ARGUMENT)
+    # p_base, p_risk = apply_bayesian_update(...) 
     
     # 2. Determine Starting Position
     base_start_x = 10
     lane_offset_m = float(row["lane_offset_m"])
     curvature = float(row["road_curvature_1pm"])
     road_width_m = float(row["road_width_m"])
-    label = str(row["behavior_label"])
+    label = str(behavior_label)
     
     start_y = int(np.clip(grid_h // 2 + lane_offset_m * 3.2, 8, grid_h - 9))
     start = (start_y, base_start_x)
@@ -105,7 +100,7 @@ def create_grid_map(row, risk_score_ml, grid_width=120, grid_height=80):
         for dy in (-spread, spread):
             oy2 = int(np.clip(oy + dy, 0, grid_h - 1))
             risk_cost += 0.35 * amp * np.exp(-((Y - oy2) ** 2 + (X - ox) ** 2) / (2 * (sigma * 1.2) ** 2))
-
+    
     # 5.2 Speeding Penalty
     speed_kmh = float(row["ego_speed_mps"]) * 3.6
     over_limit = max(0.0, speed_kmh - float(row["speed_limit_kmh"]))
@@ -115,7 +110,7 @@ def create_grid_map(row, risk_score_ml, grid_width=120, grid_height=80):
         y0 = max(0, int(centerline_1d.mean() - half_width_cells))
         y1 = min(grid_h, int(centerline_1d.mean() + half_width_cells) + 1)
         rule_cost[y0:y1, f0:f1] += 350 + 45 * over_limit
-
+    
     # 5.3 Stop/Yield Buffer (Forbidden forward zone)
     if label in ["stop", "yield"]:
         rule_cost[max(0, start[0] - 6) : min(grid_h, start[0] + 7), start[1] + 2 : min(grid_w, start[1] + 20)] += 1300.0
@@ -129,3 +124,4 @@ def create_grid_map(row, risk_score_ml, grid_width=120, grid_height=80):
         total_cost[max(0, oy - 2) : min(grid_h, oy + 3), max(0, ox - 5) : min(grid_w, ox + 6)] = INF
     
     return total_cost, start
+

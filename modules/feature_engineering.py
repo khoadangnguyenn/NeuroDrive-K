@@ -126,13 +126,16 @@ def perform_feature_engineering(df):
     features_dir = os.path.join(project_root, 'features')
     os.makedirs(features_dir, exist_ok=True)
     
-    try:
-        h5_path = os.path.join(features_dir, 'processed_features.h5')
-        df_feat.to_hdf(h5_path, key='df', mode='w')
-        print(f"  → Features saved to {h5_path}")
-    except Exception:
-        csv_path = os.path.join(features_dir, 'processed_features.csv')
-        print(f"  → Saving to CSV (HDF5 support not found): {csv_path}")
-        df_feat.to_csv(csv_path, index=False)
+    # 1. Save as CSV (Standard)
+    csv_path = os.path.join(features_dir, 'processed_features.csv')
+    df_feat.to_csv(csv_path, index=False)
+    print(f"  → Features saved to CSV: {csv_path}")
+    
+    # 2. Save as NPY (Fast numeric loading)
+    # We save only numeric columns to .npy for lightweight access if needed
+    npy_path = os.path.join(features_dir, 'processed_features.npy')
+    numeric_df = df_feat.select_dtypes(include=[np.number])
+    np.save(npy_path, numeric_df.values)
+    print(f"  → Numeric features saved to NPY: {npy_path}")
         
     return df_feat
