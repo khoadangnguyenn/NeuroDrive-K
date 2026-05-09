@@ -12,7 +12,13 @@ import numpy as np
 import joblib
 import os
 import pandas as pd
+try:
+    import xgboost as xgb
+    XGB_AVAILABLE = True
+except ImportError:
+    XGB_AVAILABLE = False
 from modules.visualizer import compute_shap_explanation
+
 
 FEATURES = [
     # Raw features
@@ -39,7 +45,8 @@ def train_perception_models(df):
     Models:
     - Naive Bayes: Behavior prediction (classification)
     - Decision Tree: Risk assessment (regression)
-    - RandomForest & GBR: Ensemble improvements for robustness
+    - RandomForest & XGBoost: Ensemble improvements for robustness
+
     
     Optimizations:
     - StandardScaler for feature normalization
@@ -110,6 +117,34 @@ def train_perception_models(df):
         model_behavior = model_nb
         print(f"\n  → Using Naive Bayes for behavior prediction")
     
+    # [2.1] XGBoost Classification
+    if XGB_AVAILABLE:
+        print("\n  [2.1] XGBoost Classification Training:")
+        try:
+            tree_method = 'gpu_hist'
+            device = 'cuda'
+            
+            model_xgb_cls = xgb.XGBClassifier(
+                n_estimators=200,
+                max_depth=10,
+                learning_rate=0.1,
+                tree_method='gpu_hist', # Standard for many Colab environments
+                random_state=42,
+                use_label_encoder=False,
+                eval_metric='mlogloss'
+            )
+            model_xgb_cls.fit(X_train_cls, y_train_cls)
+            acc_xgb = model_xgb_cls.score(X_test_cls, y_test_cls)
+            print(f"    XGBoost Accuracy: {acc_xgb:.4f}")
+            if acc_xgb > acc_rf:
+                model_behavior = model_xgb_cls
+                print("    → XGBoost outperformed RandomForest, using XGBoost.")
+        except Exception as e:
+            print(f"    → XGBoost training failed: {e}")
+            model_xgb_cls = None
+    else:
+        model_xgb_cls = None
+
     # (E) Risk Assessment (Regression)
     print("\n  --- Risk Assessment (Regression) ---")
     
@@ -136,32 +171,32 @@ def train_perception_models(df):
     r2_dt = r2_score(y_test_reg, y_pred_dt)
     print(f"    R² Score: {r2_dt:.4f}")
     
-    # [4] Gradient Boosting Regressor
-    print("\n  [4] Gradient Boosting Regressor Training:")
-    param_grid_gbr = {
-        'n_estimators': [100, 200],
-        'max_depth': [3, 5],
-        'learning_rate': [0.05, 0.1],
-        'min_samples_split': [5, 10]
-    }
-    grid_gbr = GridSearchCV(
-        GradientBoostingRegressor(random_state=42), param_grid_gbr,
-        cv=5, scoring='r2', n_jobs=-1
-    )
-    grid_gbr.fit(X_train_reg, y_train_reg)
-    model_gbr = grid_gbr.best_estimator_
-    
-    y_pred_gbr = model_gbr.predict(X_test_reg)
-    r2_gbr = r2_score(y_test_reg, y_pred_gbr)
-    print(f"    R² Score: {r2_gbr:.4f}")
-    
-    # Choose best risk model
-    if r2_gbr >= r2_dt:
-        model_risk = model_gbr
-        print(f"\n  → Using Gradient Boosting for risk assessment")
+    # [4] XGBoost Regression
+    if XGB_AVAILABLE:
+        print("\n  [4] XGBoost Regression Training:")
+        try:
+            model_xgb_reg = xgb.XGBRegressor(
+                n_estimators=200,
+                max_depth=7,
+                learning_rate=0.1,
+                tree_method='gpu_hist',
+                random_state=42
+            )
+            model_xgb_reg.fit(X_train_reg, y_train_reg)
+            r2_xgb = r2_score(y_test_reg, model_xgb_reg.predict(X_test_reg))
+            print(f"    XGBoost R² Score: {r2_xgb:.4f}")
+            if r2_xgb > r2_dt:
+                model_risk = model_xgb_reg
+                print("    → XGBoost outperformed Decision Tree, using XGBoost.")
+            else:
+                model_risk = model_dt
+        except Exception as e:
+            print(f"    → XGBoost training failed (falling back to Decision Tree): {e}")
+            model_risk = model_dt
+            model_xgb_reg = None
     else:
         model_risk = model_dt
-        print(f"\n  → Using Decision Tree for risk assessment")
+        model_xgb_reg = None
     
     compute_shap_explanation(model_behavior, X_test_cls, class_names, FEATURES)
     
@@ -173,39 +208,48 @@ def train_perception_models(df):
     joblib.dump(model_nb, os.path.join(models_dir, 'naive_bayes_behavior.pkl'))
     joblib.dump(model_rf, os.path.join(models_dir, 'random_forest_behavior.pkl'))
     joblib.dump(model_dt, os.path.join(models_dir, 'decision_tree_risk.pkl'))
-    joblib.dump(model_gbr, os.path.join(models_dir, 'gradient_boosting_risk.pkl'))
+    if model_xgb_cls: joblib.dump(model_xgb_cls, os.path.join(models_dir, 'xgb_behavior.pkl'))
+    if model_xgb_reg: joblib.dump(model_xgb_reg, os.path.join(models_dir, 'xgb_risk.pkl'))
     joblib.dump(le_behavior, os.path.join(models_dir, 'le_behavior.pkl'))
     joblib.dump(scaler, os.path.join(models_dir, 'scaler.pkl'))
     print(f"\n  → Models saved to {models_dir}")
     
-    return model_nb, model_dt, le_behavior, scaler, model_rf, model_gbr
+    return model_nb, model_dt, le_behavior, scaler, model_rf, model_xgb_cls, model_xgb_reg
+
+
 
 
 
 
 def predict_perception(row, model_nb, model_dt, le_behavior, features, scaler=None,
-                       model_rf=None, model_gbr=None):
+                       model_rf=None, model_xgb_cls=None, model_xgb_reg=None):
     """
     Predicts behavior and risk score for a given scenario row.
     
-    Uses ensemble models if available (RF for behavior, GBR for risk).
+    Uses ensemble models if available (XGB > RF for behavior, XGB > DT for risk).
     """
     X_single = pd.DataFrame([row[features]], columns=features)
     
     if scaler is not None:
         X_single = pd.DataFrame(scaler.transform(X_single), columns=features)
     
-    if model_rf is not None:
+    # 1. Behavior Prediction
+    if model_xgb_cls is not None:
+        behavior_idx = model_xgb_cls.predict(X_single)[0]
+    elif model_rf is not None:
         behavior_idx = model_rf.predict(X_single)[0]
     else:
         behavior_idx = model_nb.predict(X_single)[0]
     predicted_behavior = le_behavior.inverse_transform([behavior_idx])[0]
     
-    if model_gbr is not None:
-        risk_score = model_gbr.predict(X_single)[0]
+    # 2. Risk Prediction
+    if model_xgb_reg is not None:
+        risk_score = model_xgb_reg.predict(X_single)[0]
     else:
         risk_score = model_dt.predict(X_single)[0]
     
     risk_score = np.clip(risk_score, 0, 1)
     
     return predicted_behavior, risk_score
+
+
