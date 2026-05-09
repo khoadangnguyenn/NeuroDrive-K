@@ -5,8 +5,5 @@ seaborn>=0.13.0
 scikit-learn>=1.4.0
 shap
 joblib
-tables
-h5py
 pillow
 tqdm
-kaggle
