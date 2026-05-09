@@ -1,9 +1,15 @@
 <div align="center">
-# 🚗 Autonomous Driving AI Pipeline (NMAI)
+
+# 🚗 NeuroDrive-K
+**A Path Planning Modular Framework for Autonomous Driving Systems**
+
+
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![AI Project](https://img.shields.io/badge/Field-Artificial_Intelligence-red.svg?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/Status-Complete-success.svg?style=flat-square)](#)
-</div>  
+
+A comprehensive autonomous driving simulation framework that integrates Machine Learning perception, Bayesian risk modeling, rule-based decision making, and A* path planning. This project satisfies the requirements for the **Introduction to AI (NMAI)** course.
+</div>
 
 ---
 
