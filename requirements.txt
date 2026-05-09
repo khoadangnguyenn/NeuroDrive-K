@@ -9,3 +9,4 @@ tables
 h5py
 pillow
 tqdm
+kaggle
