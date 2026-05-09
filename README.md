@@ -14,16 +14,18 @@ A comprehensive autonomous driving simulation framework that integrates Machine 
 ---
 
 ## 🎓 Course Information
-- **Course Name**: Nhập môn Trí tuệ nhân tạo (Introduction to AI)
-- **Course Code**: NMAI
-- **Semester**: Học kỳ 2 - Năm học 2025-2026
-- **Instructor (GVHD)**: [Họ tên Giảng viên]
+- **Course Name**: Introduction to Artificial Intelligence
+- **Course Code**:  CO3061
+- **Semester**: Semester 2 - Year 2025-2026
+- **Instructor**: Dr. Truong Vinh Lan
 
 ## 👥 Team Members
 | No. | Full Name | Student ID | Email |
 |:---:|:---|:---:|:---|
-| 1 | [Họ tên Thành viên 1] | [MSSV 1] | [Email 1] |
-| 2 | [Họ tên Thành viên 2] | [MSSV 2] | [Email 2] |
+| 1 | Nguyen Dang Khoa | 2352570 | khoa.nguyen2352570@hcmut.edu.vn |
+| 2 | Nguyen Tran Gia Bao | 2352103 | [Email 2] |
+| 2 | Nguyen Viet Hung | 2352442 | [Email 2] |
+| 2 | Le Duy Nhat Minh | 2352740 | [Email 2] |
 
 ---
 
