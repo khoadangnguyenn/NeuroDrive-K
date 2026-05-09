@@ -1,19 +1,71 @@
 <div align="center">
-
-# 🚗 NeuroDrive-K
-**A Modular, Hybrid Framework for Autonomous Driving Systems**
-
-
+# 🚗 Autonomous Driving AI Pipeline (NMAI)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![AI Project](https://img.shields.io/badge/Field-Artificial_Intelligence-red.svg?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/Status-Complete-success.svg?style=flat-square)](#)
+</div>  
 
-A comprehensive autonomous driving simulation framework that integrates Machine Learning perception, Bayesian risk modeling, rule-based decision making, and A* path planning. This project satisfies the requirements for the **Introduction to AI (NMAI)** course.
-</div>
+---
+
+## 🎓 Course Information
+- **Course Name**: Nhập môn Trí tuệ nhân tạo (Introduction to AI)
+- **Course Code**: NMAI
+- **Semester**: Học kỳ 2 - Năm học 2025-2026
+- **Instructor (GVHD)**: [Họ tên Giảng viên]
+
+## 👥 Team Members
+| No. | Full Name | Student ID | Email |
+|:---:|:---|:---:|:---|
+| 1 | [Họ tên Thành viên 1] | [MSSV 1] | [Email 1] |
+| 2 | [Họ tên Thành viên 2] | [MSSV 2] | [Email 2] |
+
+---
+
+## 🎯 Project Goal
+The objective of this project is to build a robust autonomous driving decision-making pipeline. It integrates physics-based feature engineering, machine learning for behavior perception, Bayesian modeling for environment uncertainty, and A* search for safe trajectory planning.
+
+## 📂 Project Structure
+```
+NeuroDrive-K/
+├── notebooks/                  # Google Colab Notebooks
+│   └── NeuroDrive_K_Colab.ipynb
+├── modules/                    # Core logic (Python modules)
+│   ├── bayes.py                # Bayesian risk logic
+│   ├── feature_engineering.py   # Physics-based feature creation
+│   ├── knowledge_base.py        # Grid Map & Cost aggregation
+│   ├── path_planner.py         # A* algorithm & Fallback planner
+│   ├── perception_ml.py        # ML training & inference
+│   ├── rule_based.py           # Safety rules & tactical goals
+│   └── visualizer.py           # GIF & Plot generation
+├── data/                       # Raw and source datasets
+├── features/                   # Preprocessed & extracted features (.h5/.npy)
+├── models/                     # Saved ML models (PKL files)
+├── reports/                    # Final PDF Report & EDA
+│   └── Report_NMAI.pdf
+├── visualize/                  # Generated plots and GIFs
+├── main.py                     # Local entry point
+├── requirements.txt            # Dependencies
+└── README.md                   # Project documentation
+```
+
+---
+
+## 🚀 Execution Instructions
+
+### 1. Google Colab (Recommended)
+You can run the entire pipeline directly on Google Colab without any local setup.
+- **Colab Link**: [Link to your Colab Notebook]
+- Follow the instructions in the notebook to download the data and run the simulation.
+
+### 2. Local Environment
+1. Clone the repository: `git clone https://github.com/khoadangnguyenn/NeuroDrive-K.git`
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the pipeline: `python main.py`
 
 ---
 
 ## 📽️ Simulation Previews
+... (existing content) ...
 
 | **Overtake Maneuver** | **Lane Change** |
 |:---:|:---:|
