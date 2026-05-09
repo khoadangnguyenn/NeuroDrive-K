@@ -23,9 +23,9 @@ A comprehensive autonomous driving simulation framework that integrates Machine 
 | No. | Full Name | Student ID | Email |
 |:---:|:---|:---:|:---|
 | 1 | Nguyen Dang Khoa | 2352570 | khoa.nguyen2352570@hcmut.edu.vn |
-| 2 | Nguyen Tran Gia Bao | 2352103 | [Email 2] |
-| 2 | Nguyen Viet Hung | 2352442 | [Email 2] |
-| 2 | Le Duy Nhat Minh | 2352740 | [Email 2] |
+| 2 | Nguyen Tran Gia Bao | 2352103 | bao.nguyenkunne@hcmut.edu.vn |
+| 2 | Nguyen Viet Hung | 2352442 | hung.nguyenviet@hcmut.edu.vn |
+| 2 | Le Duy Nhat Minh | 2352740 | minh.leduy@hcmut.edu.vn |
 
 ---
 
@@ -73,7 +73,6 @@ You can run the entire pipeline directly on Google Colab without any local setup
 ---
 
 ## 📽️ Simulation Previews
-... (existing content) ...
 
 | **Overtake Maneuver** | **Lane Change** |
 |:---:|:---:|
