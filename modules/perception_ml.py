@@ -128,7 +128,7 @@ def train_perception_models(df):
                 n_estimators=200,
                 max_depth=10,
                 learning_rate=0.1,
-                tree_method='gpu_hist', # Standard for many Colab environments
+                # Removed hardcoded 'gpu_hist' for cross-platform compatibility
                 random_state=42,
                 use_label_encoder=False,
                 eval_metric='mlogloss'
@@ -171,6 +171,13 @@ def train_perception_models(df):
     r2_dt = r2_score(y_test_reg, y_pred_dt)
     print(f"    R² Score: {r2_dt:.4f}")
     
+    # [3.1] Gradient Boosting Regressor
+    print("\n  [3.1] Gradient Boosting Regressor Training:")
+    model_gb_reg = GradientBoostingRegressor(n_estimators=100, random_state=42)
+    model_gb_reg.fit(X_train_reg, y_train_reg)
+    r2_gb = r2_score(y_test_reg, model_gb_reg.predict(X_test_reg))
+    print(f"    R² Score: {r2_gb:.4f}")
+
     # [4] XGBoost Regression
     if XGB_AVAILABLE:
         print("\n  [4] XGBoost Regression Training:")
@@ -179,7 +186,7 @@ def train_perception_models(df):
                 n_estimators=200,
                 max_depth=7,
                 learning_rate=0.1,
-                tree_method='gpu_hist',
+                # Removed hardcoded 'gpu_hist' for cross-platform compatibility
                 random_state=42
             )
             model_xgb_reg.fit(X_train_reg, y_train_reg)
@@ -208,6 +215,7 @@ def train_perception_models(df):
     joblib.dump(model_nb, os.path.join(models_dir, 'naive_bayes_behavior.pkl'))
     joblib.dump(model_rf, os.path.join(models_dir, 'random_forest_behavior.pkl'))
     joblib.dump(model_dt, os.path.join(models_dir, 'decision_tree_risk.pkl'))
+    joblib.dump(model_gb_reg, os.path.join(models_dir, 'gradient_boosting_risk.pkl'))
     if model_xgb_cls: joblib.dump(model_xgb_cls, os.path.join(models_dir, 'xgb_behavior.pkl'))
     if model_xgb_reg: joblib.dump(model_xgb_reg, os.path.join(models_dir, 'xgb_risk.pkl'))
     joblib.dump(le_behavior, os.path.join(models_dir, 'le_behavior.pkl'))
