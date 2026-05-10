@@ -76,7 +76,7 @@ You can run the entire pipeline directly on Google Colab without any local setup
 
 | **Overtake Maneuver** | **Lane Change** |
 |:---:|:---:|
-| ![Overtake](visualize/gifs/scenario_14.gif) | ![Lane Change](visualize/gifs/scenario_15.gif) |
+| ![Overtake](visualize/gifs/scenario_14.gif) | ![Lane Change](visualize/gifs/scenario_9.gif) |
 | *Safely navigating around obstacles* | *Strategic positioning for traffic flow* |
 
 | **Yield & Stop** | **Following Behavior** |
