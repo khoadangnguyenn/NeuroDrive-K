@@ -6,4 +6,5 @@ scikit-learn>=1.4.0
 shap
 joblib
 pillow
+xgboost
 tqdm
