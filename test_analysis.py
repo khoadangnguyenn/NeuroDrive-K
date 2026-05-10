@@ -284,5 +284,12 @@ def main():
     print("  ANALYSIS COMPLETE")
     print("="*60)
 
-if __name__ == "__main__":
+def run_test_analysis():
+    """
+    Hàm wrapper để gọi toàn bộ quy trình kiểm thử và phân tích kết quả.
+    Có thể được import và sử dụng trong main.py hoặc các script khác.
+    """
     main()
+
+if __name__ == "__main__":
+    run_test_analysis()
