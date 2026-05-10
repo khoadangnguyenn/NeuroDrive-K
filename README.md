@@ -62,7 +62,7 @@ NeuroDrive-K/
 
 ### 1. Google Colab (Recommended)
 You can run the entire pipeline directly on Google Colab without any local setup.
-- **Colab Link**: [Link to your Colab Notebook]
+- **Colab Link**: [https://colab.research.google.com/drive/1M4f6ZbqryfChyGCJ5kK-6VaXZpTG68yJ]
 - Follow the instructions in the notebook to download the data and run the simulation.
 
 ### 2. Local Environment
@@ -109,23 +109,6 @@ This system implements the mandatory 4-layer architecture for autonomous decisio
 ### 5. Perception ML (L.O.3)
 - **Ensemble Learning**: Random Forest and Gradient Boosting models for behavior classification and risk regression.
 - **Explainability**: Integrated **SHAP** analysis to visualize feature importance.
-
----
-
-## 🚀 Getting Started
-
-### Installation
-1. Clone the repository and navigate to the project folder.
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-### Execution
-Run the end-to-end pipeline (Preprocessing -> Training -> Simulation):
-```bash
-python main.py
-```
 
 ---
 
