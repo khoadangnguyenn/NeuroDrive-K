@@ -69,6 +69,7 @@ You can run the entire pipeline directly on Google Colab without any local setup
 1. Clone the repository: `git clone https://github.com/khoadangnguyenn/NeuroDrive-K.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the pipeline: `python main.py`
+4. Test: python `test_analysis.py`
 
 ---
 
