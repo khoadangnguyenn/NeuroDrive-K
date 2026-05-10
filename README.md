@@ -63,6 +63,7 @@ NeuroDrive-K/
 ### 1. Google Colab (Recommended)
 You can run the entire pipeline directly on Google Colab without any local setup.
 - **Colab Link**: [https://colab.research.google.com/drive/1M4f6ZbqryfChyGCJ5kK-6VaXZpTG68yJ]
+- **PDF Report Link**:[https://drive.google.com/file/d/1M2IYp-JXLpZXQTItAXujSoUTD95GaoNo/view?usp=sharing]
 - Click 'Run All' button to download the data and run the simulation.
 
 ### 2. Local Environment
