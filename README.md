@@ -18,6 +18,8 @@ A comprehensive autonomous driving simulation framework that integrates Machine 
 - **Course Code**:  CO3061
 - **Semester**: Semester 2, Academic Year 2025–2026
 - **Instructor**: Dr. Truong Vinh Lan
+- **Class**: A01
+- **Group**: 06
 
 ## 👥 Team Members
 | No. | Full Name | Student ID | Email |
