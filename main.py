@@ -3,15 +3,15 @@ import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import io
-from PIL import Image
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# Import all necessary modules
 from modules.feature_engineering import perform_feature_engineering
 from modules.perception_ml import train_perception_models, predict_perception, FEATURES
+from modules.bayes import apply_bayesian_update
+from modules.rule_based import apply_safety_rules, apply_behavior_rules, set_goal
 from modules.knowledge_base import create_grid_map
-from modules.rule_based import set_goal
 from modules.path_planner import plan_path_with_fallback
 from modules.visualizer import visualize_scenario, create_scenario_gif
 
@@ -35,22 +35,23 @@ def main():
     df = pd.read_csv(dataset_path)
     print(f"  → Loaded {len(df)} rows")
     
-    # 2. Feature Engineering
-    print("\n2. Performing Feature Engineering...")
+    # 2. Feature Engineer
+    print("\n[FEATURE ENGINEER] Performing Feature Engineering...")
     df_feat = perform_feature_engineering(df)
     
-    # 3. Perception ML Training
-    print("\n3. Training Perception Models...")
-    model_nb, model_dt, le_behavior, scaler, model_rf, model_gbr = train_perception_models(df_feat)
+    # 3. ML Training
+    print("\n[ML TRAINING] Training Perception Models (GPU support enabled)...")
+    (model_nb, model_dt, le_behavior, scaler, 
+     model_rf, model_xgb_cls, model_xgb_reg) = train_perception_models(df_feat)
+
+
     
     # 4. Simulation Execution
     print("\n4. Running Autonomous Simulation Pipeline...")
     
-    # Select one representative index for each unique behavior
     demo_indices = []
     unique_behaviors = df_feat['behavior_label'].unique()
     for b in sorted(unique_behaviors):
-        # Pick the first occurrence for each behavior
         idx = df_feat[df_feat['behavior_label'] == b].index[0]
         demo_indices.append(idx)
     
@@ -60,37 +61,62 @@ def main():
         print(f"\n--- Scenario {i+1} (Index: {idx}) ---")
         row = df_feat.iloc[idx]
         
-        # A: Perception Inference
-        predicted_behavior, risk_score = predict_perception(
+        # 4.1 Perception Inference (ML)
+        predicted_behavior_ml, risk_score_ml = predict_perception(
             row, model_nb, model_dt, le_behavior, FEATURES,
-            scaler=scaler, model_rf=model_rf, model_gbr=model_gbr
+            scaler=scaler, model_rf=model_rf,
+            model_xgb_cls=model_xgb_cls, model_xgb_reg=model_xgb_reg
         )
-        print(f"  > Predicted Behavior: {predicted_behavior} | Risk Score: {risk_score:.4f}")
+
+
+        print(f"  > [ML] Predicted: {predicted_behavior_ml} | Score: {risk_score_ml:.4f}")
+
+        # 4.2 Bayesian Risk Model
+        p_base, p_risk = apply_bayesian_update(
+            risk_score_ml, 
+            row['weather_condition'], 
+            row['road_surface_condition'], 
+            row['visibility_range_m']
+        )
+        print(f"  > [BAYES] Updated Risk: {p_risk:.4f} (Base: {p_base:.4f})")
+
+        # 4.3 Rule-based System
+        safety_decision = apply_safety_rules(row)
+        if safety_decision:
+            final_behavior = safety_decision
+            print(f"  > [RULES] Safety override: {final_behavior}")
+        else:
+            final_behavior = apply_behavior_rules(row)
+            print(f"  > [RULES] Tactical decision: {final_behavior}")
+
+        # 4.4 Map Fusion
+        grid, start = create_grid_map(row, p_risk, final_behavior, grid_width=GRID_WIDTH, grid_height=GRID_HEIGHT)
         
-        # B: Knowledge Base Construction (Bayesian + Rules)
-        grid, start = create_grid_map(row, risk_score, grid_width=GRID_WIDTH, grid_height=GRID_HEIGHT)
-        print("  > Grid Map updated via Bayesian and Rule-based models.")
-        
-        goal = set_goal(row, predicted_behavior, start, grid, grid_width=GRID_WIDTH, grid_height=GRID_HEIGHT)
-        print(f"  > Target Goal: {goal}")
-        
-        # C: Path Planning (A* with Fallback)
-        path, fsm_cmd, used_fallback = plan_path_with_fallback(grid, start, goal, predicted_behavior)
+        # Determine the target goal based on rules and road geometry
+        goal = set_goal(row, final_behavior, start, grid, GRID_WIDTH, GRID_HEIGHT)
+        print(f"  > [MAP FUSION] Cost grid generated. Goal: {goal}")
+
+        # 4.5 Path Planning Algorithm
+        path, fsm_cmd, used_fallback = plan_path_with_fallback(grid, start, goal, final_behavior)
         
         if fsm_cmd == "brake":
-            print("  > [ACTION] Brake - Safe path not found or stop command issued.")
-            if path: visualize_scenario(grid, path, start, goal, row, risk_score, idx)
+            print("  > [PATH PLANNING] Action: BRAKE - No safe path.")
         elif path:
-            status = "PLAN (Relaxed)" if used_fallback else "PLAN"
-            print(f"  > [SUCCESS] A* Path found ({status})!")
-            visualize_scenario(grid, path, start, goal, row, risk_score, idx)
-            create_scenario_gif(grid, path, start, goal, row, risk_score, idx)
+            status = "Relaxed" if used_fallback else "Optimal"
+            print(f"  > [PATH PLANNING] Success: {status} Path found ({len(path)} nodes).")
         else:
-            print("  > [FAILED] Pathfinding failed completely. Emergency stop.")
+            print("  > [PATH PLANNING] Failed: Emergency Stop.")
 
+        # Visualization & Output
+        if path or fsm_cmd == "brake":
+            visualize_scenario(grid, path, start, goal, row, p_risk, idx)
+            if path:
+                create_scenario_gif(grid, path, start, goal, row, p_risk, idx)
+        
     print("\n" + "=" * 60)
     print("  PIPELINE COMPLETE")
     print("=" * 60)
 
 if __name__ == "__main__":
     main()
+
