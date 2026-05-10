@@ -112,29 +112,6 @@ This system implements the mandatory 4-layer architecture for autonomous decisio
 
 ---
 
-## 📂 Project Structure
-
-```
-NeuroDrive-K/
-├── data/                       # Raw and source datasets
-├── features/                   # Preprocessed & engineered features
-├── models/                     # Saved ML models (PKL files)
-├── modules/                    # Core logic components
-│   ├── bayes.py                # Bayesian risk logic
-│   ├── feature_engineering.py   # Physics-based feature creation
-│   ├── knowledge_base.py        # Grid Map & Cost aggregation
-│   ├── path_planner.py         # A* algorithm & Fallback planner
-│   ├── perception_ml.py        # ML training & inference
-│   ├── rule_based.py           # Safety rules & tactical goals
-│   └── visualizer.py           # GIF & Plot generation
-├── visualize/                  # Generated plots and GIFs
-├── main.py                     # Entry point & Pipeline orchestrator
-├── requirements.txt            # System dependencies
-└── README.md                   # Project documentation
-```
-
----
-
 ## 🚀 Getting Started
 
 ### Installation
