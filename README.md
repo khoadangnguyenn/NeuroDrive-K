@@ -11,26 +11,6 @@
 A comprehensive autonomous driving simulation framework that integrates Machine Learning perception, Bayesian risk modeling, rule-based decision making, and A* path planning. This project satisfies the requirements for the **Introduction to Artificial Intelligence** course.
 </div>
 
----
-
-## 🎓 Course Information
-- **Course Name**: Introduction to Artificial Intelligence
-- **Course Code**:  CO3061
-- **Semester**: Semester 2, Academic Year 2025–2026
-- **Instructor**: Dr. Truong Vinh Lan
-- **Class**: A01
-- **Group**: 06
-
-## 👥 Team Members
-| No. | Full Name | Student ID | Email |
-|:---:|:---|:---:|:---|
-| 1 | Nguyen Dang Khoa | 2352570 | khoa.nguyen2352570@hcmut.edu.vn |
-| 2 | Nguyen Tran Gia Bao | 2352103 | bao.nguyenkunne@hcmut.edu.vn |
-| 2 | Nguyen Viet Hung | 2352442 | hung.nguyenviet@hcmut.edu.vn |
-| 2 | Le Duy Nhat Minh | 2352740 | minh.leduy@hcmut.edu.vn |
-
----
-
 ## 🎯 Project Goal
 The objective of this project is to build a robust autonomous driving decision-making pipeline. It integrates physics-based feature engineering, machine learning for behavior perception, Bayesian modeling for environment uncertainty, and A* search for safe trajectory planning.
 
