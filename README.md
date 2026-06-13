@@ -8,7 +8,6 @@
 [![AI Project](https://img.shields.io/badge/Field-Artificial_Intelligence-red.svg?style=flat-square)](#)
 [![Status](https://img.shields.io/badge/Status-Complete-success.svg?style=flat-square)](#)
 
-A comprehensive autonomous driving simulation framework that integrates Machine Learning perception, Bayesian risk modeling, rule-based decision making, and A* path planning. 
 </div>
 
 ## 🎯 Project Goal
